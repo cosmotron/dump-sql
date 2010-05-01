@@ -1,9 +1,32 @@
 DUMP-SQL 0.1
 
 About:
+        dump-sql parses a tcpdump packet capture file and converts each packet
+        into a series of SQL rows.  It can connect to a MySQL database and send
+        insert statements or dump them to a file if the database is not
+        accessible remotely.
+
+        Since this was written for a project, it is a bit underfeatured.  For
+        instance, the only transport layer protocol it supports is TCP, actual
+        packet payloads are ignored, and it can only connect to MySQL
+        specifically.
+
+        It separates each packet's ethernet, ip, and tcp headers into tables
+        of the same names.  Each table's schema matches the appropriate
+        header's structure plus an extra column to identify the packet.  This
+        is particularly helpful if you would like to join the tables.
+
+Prerequisites:
+        dump-sql was built using the following libraries:
+        - libpcap 1.0.0
+        - MySQL 5.1.37
 
 Building:
-fsdf
+        To build dump-sql, simply run: make
 
-Limitations:
+Usage:
+        Before running, make sure you create a database that uses the schema as
+        defined by schema.sql, as this is what the program is expecting the
+        layout to be.
 
+        Running ./dump-sql with no arguments will produce a small help output.
